@@ -29,7 +29,7 @@ let remoteVideoEl = document.querySelector('#remoteVideo');
  */
 function getMedia(successCallback, errorCallback = null) {    
     navigator.getUserMedia(mediaStreamConstraints, successCallback, err => {
-        document.body.append(JSON.stringify(err));
+        document.body.append(err);
     });
 }
 
