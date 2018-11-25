@@ -1,0 +1,15 @@
+{
+  "name": "webrtc-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Gustavo Valentim",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "peer": "^0.2.10"
+  }
+}
