@@ -32,7 +32,7 @@ let remoteVideoEl = document.querySelector('#remoteVideo');
  * Functions
  */
 function getMedia(successCallback, errorCallback = null) {
-    navigator.mediaDevices.getUserMedia(mediaStreamConstraints).then(successCallback);
+    navigator.getUserMedia(mediaStreamConstraints, successCallback);
 }
 
 function receiveStream(stream) {
