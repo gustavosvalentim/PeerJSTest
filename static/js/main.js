@@ -34,7 +34,9 @@ function getMedia(successCallback, errorCallback = null) {
         }
     }
 
-    navigator.getUserMedia(mediaStreamConstraints, successCallback);
+    navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
+        .then(successCallback)
+        .catch(errorCallback);
 }
 
 function receiveStream(stream) {
