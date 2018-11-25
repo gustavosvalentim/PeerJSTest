@@ -10,13 +10,7 @@ const peerClientSettings = {
 };
 
 const mediaStreamConstraints = {
-    video: {
-        optional: {
-            facingMode: {
-                exact: 'user'
-            }
-        }
-    },
+    video: true,
     audio: false
 };
 
@@ -33,8 +27,10 @@ let remoteVideoEl = document.querySelector('#remoteVideo');
 /*
  * Functions
  */
-function getMedia(successCallback, errorCallback = null) {
-    navigator.mediaDevices.getUserMedia(mediaStreamConstraints).then(successCallback);
+function getMedia(successCallback, errorCallback = null) {    
+    navigator.getUserMedia(mediaStreamConstraints, successCallback, err => {
+        document.body.append(JSON.stringify(err));
+    });
 }
 
 function receiveStream(stream) {
