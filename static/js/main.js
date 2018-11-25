@@ -10,7 +10,11 @@ const peerClientSettings = {
 };
 
 const mediaStreamConstraints = {
-    video: true,
+    video: {
+        optional: [{
+            facingMode: 'environment'
+        }]
+    },
     audio: false
 };
 
