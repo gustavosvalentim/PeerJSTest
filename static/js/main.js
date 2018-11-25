@@ -1,6 +1,6 @@
 const peerClientSettings = {
-    host: 'localhost',
-    port: process.env.PORT || 8080,
+    host: location.host,
+    port: location.port ? location.port : '',
     path: '/peerjs',
     config: {
         'iceServers': [
