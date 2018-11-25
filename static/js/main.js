@@ -21,7 +21,7 @@ let peerConnection;
 let roomInputEl = document.querySelector('#roomID');
 let connectButtonEl = document.querySelector('#connectButton');
 let homeVideoEl = document.querySelector('#homeVideo');
-let remoteVideoEl = document.querySelector('#remoteVideo');
+let remoteVideosEl = document.querySelector('#remoteVideos');
 
 
 /*
@@ -38,9 +38,10 @@ function getMedia(successCallback, errorCallback = null) {
 }
 
 function receiveStream(stream) {
-    console.log(remoteVideoEl);
-    remoteVideoEl.srcObject = stream;
-    remoteVideoEl.play();
+    let videoObj = document.createElement('video');
+    remoteVideosEl.appendChild(videoObj);
+    videoObj.srcObject = stream;
+    videoObj.play();
 }
 
 function receiveCall(call) {
