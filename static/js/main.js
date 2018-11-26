@@ -44,6 +44,7 @@ let remoteVideosEl = document.querySelector('#remoteVideos');
 function getMedia(successCallback, errorCallback = null) {    
     if(errorCallback === null) {
         errorCallback = err => {
+            console.log(err);
             document.body.append(err);
         }
     }
