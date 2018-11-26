@@ -97,7 +97,14 @@ function startLocalStream(event) {
     peerConnection = new Peer(userID, peerClientSettings);
     peerConnection.on('open', id => {
         userIDInput.disabled = true;
-        userIDSet.disabled = true
+        userIDSet.disabled = true;
+        
+        let userIDDiv = document.querySelector('#userID');
+        userIDDiv.innerHTML += '<br>';
+        let roomURL = document.createElement('A');
+        roomURL.href = `#${id}`;
+        roomURL.textContent = id;
+        userIDDiv.appendChild(roomURL);
     });
 
     peerConnection.on('call', receiveCall);
