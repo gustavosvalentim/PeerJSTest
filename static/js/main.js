@@ -73,11 +73,6 @@ function receiveCall(call) {
     });
 
     call.on('stream', receiveStream);
-    call.on('close', () => {
-        let videoObj = getVideoObjectByStream(remoteStream);
-        videoObj.srcObject = null;
-        videoObj = null;
-    });
 }
 
 // util functions
