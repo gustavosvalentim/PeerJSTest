@@ -8,7 +8,6 @@ const peerClientSettings = {
         ]
     }
 };
-
 const mediaStreamConstraints = {
     video: true,
     audio: false
@@ -34,6 +33,10 @@ function getMedia(successCallback, errorCallback = null) {
         }
     }
 
+    if(navigator.mediaDevices.getUserMedia === undefined) {
+        navigator.mediaDevices.getUserMedia = navigator.getUserMedia;
+    }
+
     navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
         .then(successCallback)
         .catch(errorCallback);
@@ -47,20 +50,38 @@ function receiveStream(stream) {
 }
 
 function receiveCall(call) {
-    console.log(call);
+    let receiveStream;
     getMedia(
         mediaStream => {
+            receiveStream = mediaStream;
             call.answer(mediaStream);
     });
 
     call.on('stream', receiveStream);
+    call.on('close', () => {
+        let videoObj = getVideoObjectByStream(receiveStream);
+        videoObj.srcObject = null;
+        videoObj = null;
+    });
 }
 
+
+function getVideoObjectByStream(stream) {
+    var remoteVideos = document.querySelectorAll('video');
+
+    for(video in remoteVideos) {
+        if(video.srcObject === stream) {
+            return video;
+        }
+    }
+}
 
 
 /*
  * Events
  */
+
+// Buttons
 connectButtonEl.addEventListener('click', 
     () => {
         let otherPeerID = roomInputEl.value;
@@ -73,13 +94,10 @@ connectButtonEl.addEventListener('click',
     }
 );
 
-
-/*
- * Run
- */
+// PeerConnection
 peerConnection = new Peer(peerClientSettings);
 
-peerConnection.on('open', 
+peerConnection.on('open',
     id => {
         document.querySelector('h1').textContent += id;
     });
