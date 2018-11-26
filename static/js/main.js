@@ -66,10 +66,8 @@ function receiveStream(stream) {
 }
 
 function receiveCall(call) {
-    let remoteStream;
     getMedia(
         mediaStream => {
-            remoteStream = mediaStream;
             call.answer(mediaStream);
     });
 
