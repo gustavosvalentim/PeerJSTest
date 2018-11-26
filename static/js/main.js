@@ -1,5 +1,8 @@
+/*
+ * Settings
+ */
 const peerClientSettings = {
-    host: location.host,
+    host: location.hostname,
     port: location.port ? location.port : '',
     path: '/peerjs',
     config: {
@@ -13,12 +16,24 @@ const mediaStreamConstraints = {
     audio: false
 };
 
-// declare some variables
-let peerConnection;
 
-// html objects
+/*
+ * Global scope vars
+ */
+let peerConnection;
+let userID;
+
+/*
+ * HTML elements
+ */
+// user
+let userIDText = document.querySelector('#userIDText');
+let userIDInput = document.querySelector('#userIDInput');
+let userIDSet = document.querySelector('#userIDSet');
+// connection
 let roomInputEl = document.querySelector('#roomID');
 let connectButtonEl = document.querySelector('#connectButton');
+// video elements
 let homeVideoEl = document.querySelector('#homeVideo');
 let remoteVideosEl = document.querySelector('#remoteVideos');
 
@@ -50,22 +65,22 @@ function receiveStream(stream) {
 }
 
 function receiveCall(call) {
-    let receiveStream;
+    let remoteStream;
     getMedia(
         mediaStream => {
-            receiveStream = mediaStream;
+            remoteStream = mediaStream;
             call.answer(mediaStream);
     });
 
     call.on('stream', receiveStream);
     call.on('close', () => {
-        let videoObj = getVideoObjectByStream(receiveStream);
+        let videoObj = getVideoObjectByStream(remoteStream);
         videoObj.srcObject = null;
         videoObj = null;
     });
 }
 
-
+// util functions
 function getVideoObjectByStream(stream) {
     var remoteVideos = document.querySelectorAll('video');
 
@@ -74,6 +89,25 @@ function getVideoObjectByStream(stream) {
             return video;
         }
     }
+}
+
+function startLocalStream(event) {
+    if(userIDText.value === '') alert('Set your id');
+    else userID = userIDText.value;
+    peerConnection = new Peer(userID, peerClientSettings);
+    peerConnection.on('open', id => {
+        userIDInput.disabled = true;
+        userIDSet.disabled = true
+    });
+
+    peerConnection.on('call', receiveCall);
+
+    getMedia(
+        mediaStream => {
+            homeVideoEl.srcObject = mediaStream;
+            homeVideoEl.play();
+        }
+    );
 }
 
 
@@ -94,19 +128,4 @@ connectButtonEl.addEventListener('click',
     }
 );
 
-// PeerConnection
-peerConnection = new Peer(peerClientSettings);
-
-peerConnection.on('open',
-    id => {
-        document.querySelector('h1').textContent += id;
-    });
-
-peerConnection.on('call', receiveCall);
-
-getMedia(
-    stream => {
-        homeVideoEl.srcObject = stream;
-        homeVideoEl.play();
-    }
-);
+userIDSet.addEventListener('click', startLocalStream);
