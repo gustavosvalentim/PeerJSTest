@@ -72,10 +72,8 @@ function receiveStream(stream) {
 }
 
 function receiveCall(call) {
-    let videoObj;
     getMedia(
         mediaStream => {
-            videoObj = getVideoElementByStream(mediaStream);
             call.answer(mediaStream);
     });
 
