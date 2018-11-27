@@ -49,8 +49,14 @@ function getMedia(successCallback, errorCallback = null) {
         }
     }
 
+
     if(navigator.mediaDevices.getUserMedia === undefined) {
-        navigator.mediaDevices.getUserMedia = navigator.getUserMedia;
+        navigator.mediaDevices.getUserMedia = new Promise((resolve, reject) => {
+            navigator.getUserMedia(
+                mediaStream => resolve(mediaStream),
+                error => reject(error)
+            );
+        });
     }
 
     navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
@@ -66,17 +72,21 @@ function receiveStream(stream) {
 }
 
 function receiveCall(call) {
+    let videoObj;
     getMedia(
         mediaStream => {
+            videoObj = getVideoElementByStream(mediaStream);
             call.answer(mediaStream);
     });
 
     call.on('stream', receiveStream);
 }
 
+
 // util functions
-function getVideoObjectByStream(stream) {
+function getVideoElementByStream(stream) {
     var remoteVideos = document.querySelectorAll('video');
+    console.log(remoteVideos);
 
     for(video in remoteVideos) {
         if(video.srcObject === stream) {
@@ -119,10 +129,11 @@ function startLocalStream(event) {
 // Buttons
 connectButtonEl.addEventListener('click', 
     () => {
+        let call;
         let otherPeerID = roomInputEl.value;
         getMedia(
             mediaStream => {
-                var call = peerConnection.call(otherPeerID, mediaStream);
+                call = peerConnection.call(otherPeerID, mediaStream);
                 call.on('stream', receiveStream);
             }
         );
