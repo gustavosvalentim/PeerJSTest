@@ -105,7 +105,7 @@ function startLocalStream(event) {
         userIDDiv.innerHTML += '<br>';
         let roomURL = document.createElement('A');
         roomURL.href = `#${id}`;
-        roomURL.textContent = id;
+        roomURL.textContent = `${location.host}/#${id}`;
         userIDDiv.appendChild(roomURL);
     });
 
@@ -127,11 +127,10 @@ function startLocalStream(event) {
 // Buttons
 connectButtonEl.addEventListener('click', 
     () => {
-        let call;
         let otherPeerID = roomInputEl.value;
         getMedia(
             mediaStream => {
-                call = peerConnection.call(otherPeerID, mediaStream);
+                let call = peerConnection.call(otherPeerID, mediaStream);
                 call.on('stream', receiveStream);
             }
         );
