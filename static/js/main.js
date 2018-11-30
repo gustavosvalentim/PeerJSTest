@@ -143,6 +143,9 @@ connectButtonEl.addEventListener('click',
     () => {
         removeConnectionElements();
         let otherPeerID = roomInputEl.value || '';
+
+        if(peerConnection === undefined) peerConnection = new Peer(otherPeerID, peerClientSettings);
+
         getMedia(
             mediaStream => {
                 let call = peerConnection.call(otherPeerID, mediaStream);
