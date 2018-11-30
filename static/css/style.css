@@ -39,7 +39,3 @@ input[type=text] {
     position: absolute;
     z-index: 1;
 }
-
-#selectRoom {
-    visibility: hidden;
-}
