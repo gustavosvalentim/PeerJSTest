@@ -142,7 +142,7 @@ function removeCreateRoomElements() {
 connectButtonEl.addEventListener('click', 
     () => {
         removeConnectionElements();
-        let otherPeerID = roomInputEl.value || null;
+        let otherPeerID = roomInputEl.value || '';
         getMedia(
             mediaStream => {
                 let call = peerConnection.call(otherPeerID, mediaStream);
