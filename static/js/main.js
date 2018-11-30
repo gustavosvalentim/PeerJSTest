@@ -145,7 +145,8 @@ connectButtonEl.addEventListener('click',
         removeConnectionElements();
 
         if(peerConnection === undefined) {
-            peerConnection = new Peer(otherPeerID, peerClientSettings);
+            peerConnection = new Peer(null, peerClientSettings);
+            peerConnection.on('open', id => console.log(id));
             peerConnection.on('call', receiveCall);
         }
 
