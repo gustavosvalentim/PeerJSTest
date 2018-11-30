@@ -141,8 +141,8 @@ function removeCreateRoomElements() {
 // Buttons
 connectButtonEl.addEventListener('click', 
     () => {
-        removeConnectionElements();
         let otherPeerID = roomInputEl.value || '';
+        removeConnectionElements();
 
         if(peerConnection === undefined) {
             peerConnection = new Peer(otherPeerID, peerClientSettings);
