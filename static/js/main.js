@@ -21,17 +21,18 @@ const mediaStreamConstraints = {
  * Global scope vars
  */
 let peerConnection;
-let userID;
+let roomID;
+let connectionID;
 
 /*
  * HTML elements
  */
 // user
-let userIDText = document.querySelector('#userIDText');
-let userIDInput = document.querySelector('#userIDInput');
-let userIDSet = document.querySelector('#userIDSet');
+let roomIDDiv = document.querySelector('#roomID');
+let roomIDInput = document.querySelector('#roomIDInput');
+let roomIDButton = document.querySelector('#roomIDButton');
 // connection
-let roomInputEl = document.querySelector('#roomID');
+let roomInputEl = document.querySelector('#connectRoomID');
 let connectButtonEl = document.querySelector('#connectButton');
 // video elements
 let homeVideoEl = document.querySelector('#homeVideo');
@@ -94,19 +95,22 @@ function getVideoElementByStream(stream) {
 }
 
 function startLocalStream(event) {
-    if(userIDText.value === '') alert('Set your id');
-    else userID = userIDText.value;
-    peerConnection = new Peer(userID, peerClientSettings);
+    document.querySelector('#selectRoom').style.visibility = 'visible';
+    
+    if(roomID === undefined) roomID = roomIDInput.value;
+    if(connectionID === undefined) connectionID = roomIDInput.value;
+
+    peerConnection = new Peer(roomID, peerClientSettings);
     peerConnection.on('open', id => {
-        userIDInput.disabled = true;
-        userIDSet.disabled = true;
-        
-        let userIDDiv = document.querySelector('#userID');
-        userIDDiv.innerHTML += '<br>';
+
+        removeCreateRoomElements();
+
+        roomIDDiv.querySelector('h1').textContent = `Sala ${connectionID}`;
+
         let roomURL = document.createElement('A');
         roomURL.href = `#${id}`;
         roomURL.textContent = `${location.host}/#${id}`;
-        userIDDiv.appendChild(roomURL);
+        roomIDDiv.appendChild(roomURL);
     });
 
     peerConnection.on('call', receiveCall);
@@ -119,6 +123,16 @@ function startLocalStream(event) {
     );
 }
 
+function removeConnectionElements() {
+    let primaryElement = document.querySelector('#selectRoom');
+    document.body.removeChild(primaryElement);
+}
+
+function removeCreateRoomElements() {
+    roomIDDiv.removeChild(roomIDInput);
+    roomIDDiv.removeChild(roomIDButton);
+}
+
 
 /*
  * Events
@@ -127,6 +141,7 @@ function startLocalStream(event) {
 // Buttons
 connectButtonEl.addEventListener('click', 
     () => {
+        removeConnectionElements();
         let otherPeerID = roomInputEl.value;
         getMedia(
             mediaStream => {
@@ -137,4 +152,20 @@ connectButtonEl.addEventListener('click',
     }
 );
 
-userIDSet.addEventListener('click', startLocalStream);
+roomIDButton.addEventListener('click', startLocalStream);
+
+if(location.hash !== '') {
+    // armazena o código que está depois da hashtag
+    connectionID = location.hash.replace('#', '');
+
+    startLocalStream();
+    removeConnectionElements();
+
+    getMedia(
+        mediaStream => {
+            let call = peerConnection.call(connectionID, mediaStream);
+            call.on('stream', receiveStream);
+        }
+    );
+
+}
