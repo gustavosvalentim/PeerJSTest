@@ -29,13 +29,12 @@ input[type=text] {
     display: inline;
 }
 
-#videos * {
-    width: 720px;
-    height: 480px;
-}
-
 #homeVideo {
     width: 280px;
     position: absolute;
     z-index: 1;
+}
+
+#connectURL {
+    margin: 2%;
 }

@@ -2,33 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>WebRTC NodeJS</title>
-
+    <title>WebRTC</title>
     <link rel="stylesheet" href="static/css/style.css">
-
 </head>
 <body>
-    <div id="roomID">
-        <h1>Criar Sala</h1>
-        <input type="text" id="roomIDInput">
-        <button id="roomIDButton">Criar</button>
-    </div>
+    <h1>WebRTC</h1>
 
-    <div id="selectRoom">
-        <h1 id="connectLabel">Conectar a sala</h1>
-        <input type="text" id="connectRoomID">
-        <button id="connectButton">Conectar</button>
+    <div class="criar-sala">
+        <label for="criar-sala-input">Criar Sala</label>
+        <input type="text" id="criar-sala-input" class="criar-sala-input">
+        <button id="criar-sala-ok">Criar</button>
     </div>
+    
 
-    <div id="videos">
-        <video id="homeVideo" autoplay></video>
-        <div id="remoteVideos"></div>
-    </div>
-
-    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/0.3.9/peer.min.js"></script>
-    <script src="static/js/main.js"></script>
+    <script src="static/js/redirect.js"></script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 let express = require('express');
 let peerServer = require('peer');
+let fs = require('fs');
 
 // create a express server
 let app = express();
@@ -26,6 +27,13 @@ app.get('/', (req, res) => {
     res.sendFile(templates_dir + 'index.html');
 });
 
+app.get('/:roomID', (req, res) => {
+    let roomID = req.params.roomID;
+    fs.readFile(templates_dir + 'video.html', 'utf-8', (err, contents) => {
+        contents = contents.replace('$$roomID', roomID);
+        res.send(contents);
+    });
+});
 
 /*
  * Start it all
