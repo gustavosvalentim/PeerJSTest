@@ -16,15 +16,15 @@ const videoConstraints = {
     height: 720
 };
 const audioConstraints = {
-    echoCancellation: true
+    true
 };
 let mediaStreamConstraints = {
     video: [
         videoConstraints
     ],
-    audio: {
+    audio: [
         audioConstraints
-    }
+    ]
 };
 
 
