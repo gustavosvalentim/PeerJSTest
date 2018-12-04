@@ -41,6 +41,7 @@ let remoteVideosEl = document.querySelector('#remoteVideos');
 function getMedia(successCallback, errorCallback = null) {    
     if(errorCallback === null) {
         errorCallback = err => {
+            console.log('Changing audio constraints to false');
             mediaStreamConstraints.audio = false;
             getMedia(successCallback, errorCallback);
         }
@@ -63,10 +64,9 @@ function getMedia(successCallback, errorCallback = null) {
 
 function receiveStream(stream) {
     let videoObj = document.createElement('video');
-    remoteVideosEl.appendChild(videoObj);
     videoObj.srcObject = stream;
+    remoteVideosEl.appendChild(videoObj);
     videoObj.play();
-    console.log(videoObj);
 }
 
 function receiveCall(call) {
