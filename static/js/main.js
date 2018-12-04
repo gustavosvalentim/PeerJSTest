@@ -18,8 +18,8 @@ const videoConstraints = {
 const audioConstraints = true;
 
 let mediaStreamConstraints = {
-    video: videoContraints, 
-    audio: audioContraints 
+    video: videoConstraints, 
+    audio: audioConstraints 
 };
 
 
