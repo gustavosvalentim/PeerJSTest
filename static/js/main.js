@@ -64,8 +64,9 @@ function getMedia(successCallback, errorCallback = null) {
 
 function receiveStream(stream) {
     let videoObj = document.createElement('video');
-    videoObj.srcObject = stream;
     remoteVideosEl.appendChild(videoObj);
+    videoObj.autoplay = true;
+    videoObj.srcObject = stream;
     videoObj.play();
 }
 
