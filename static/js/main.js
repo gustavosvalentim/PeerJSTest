@@ -11,15 +11,20 @@ const peerClientSettings = {
         ]
     }
 };
-const videoResolution = {
+const videoConstraints = {
     width: 1280,
     height: 720
 };
+const audioConstraints = {
+    echoCancellation: true
+};
 let mediaStreamConstraints = {
     video: [
-        videoResolution
+        videoConstraints
     ],
-    audio: true
+    audio: {
+        audioConstraints
+    }
 };
 
 
