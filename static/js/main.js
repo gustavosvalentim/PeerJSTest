@@ -15,16 +15,11 @@ const videoConstraints = {
     width: 1280,
     height: 720
 };
-const audioConstraints = {
-    true
-};
+const audioConstraints = true;
+
 let mediaStreamConstraints = {
-    video: [
-        videoConstraints
-    ],
-    audio: [
-        audioConstraints
-    ]
+    video: videoContraints, 
+    audio: audioContraints 
 };
 
 
