@@ -11,15 +11,13 @@ const peerClientSettings = {
         ]
     }
 };
-const videoConstraints = {
-    width: 1280,
-    height: 720
-};
-const audioConstraints = true;
 
 let mediaStreamConstraints = {
-    video: videoConstraints, 
-    audio: audioConstraints 
+    video: {
+        width: 800,
+        height: 600
+    }, 
+    audio: true 
 };
 
 
@@ -67,6 +65,7 @@ function receiveStream(stream) {
     let videoObj = document.createElement('video');
     remoteVideosEl.appendChild(videoObj);
     videoObj.srcObject = stream;
+    videoObj.muted = false;
     videoObj.play();
 }
 
