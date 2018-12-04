@@ -65,8 +65,8 @@ function receiveStream(stream) {
     let videoObj = document.createElement('video');
     remoteVideosEl.appendChild(videoObj);
     videoObj.srcObject = stream;
-    videoObj.muted = false;
     videoObj.play();
+    console.log(videoObj);
 }
 
 function receiveCall(call) {
@@ -109,7 +109,7 @@ function startLocalStream() {
 
 
 /*
- * Events
+ * Run 
  */
 if(location.hash === '#init') {
     let roomURL = document.createElement('a');
