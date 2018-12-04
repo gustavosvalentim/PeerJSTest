@@ -108,6 +108,7 @@ function startLocalStream() {
     getMedia(
         mediaStream => {
             homeVideoEl.srcObject = mediaStream;
+            homeVideoEl.muted = true;
             homeVideoEl.play();
         }
     );
